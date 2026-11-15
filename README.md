@@ -174,4 +174,35 @@ typedef struct {</p>
     int ativo; // 1 para pago, 0 para pendente (exclusão lógica);  
 } romaneio;
 
+___
+
+
+## 5. Organização dos Arquivos
+
+| Arquivo | Responsabilidade |
+|---|---|
+| `main.c` | Menu principal e laço do programa |
+| `utils.h` / `utils.c` | Leitura segura de dados, validações (data, números, CPF/CNPJ) e busca de texto |
+| `produtor.h` / `produtor.c` | Cadastro, busca e listagem de produtores; leitura e gravação de `produtores.dat` |
+| `produto.h` / `produto.c` | Cadastro, busca e listagem de produtos; leitura e gravação de `produtos.dat` |
+| `romaneio.h` / `romaneio.c` | Registro de romaneios, cálculo de totais, histórico e alteração da situação de pagamento |
+
+Cada arquivo `.h` declara as structs, constantes e funções do módulo, e o `.c` correspondente contém a implementação.
+
+___
+
+## 6. Como Compilar e Executar
+
+Com todos os arquivos na mesma pasta, compile os cinco arquivos `.c` juntos:
+
+```
+gcc -o romaneio main.c utils.c produtor.c produto.c romaneio.c
+```
+
+Execute:
+
+* Windows: `romaneio.exe`
+* Linux/macOS: `./romaneio`
+
+Em IDEs como Code::Blocks ou Dev-C++, crie um projeto de console em C e adicione os cinco arquivos `.c`. Os arquivos `.dat` são criados na pasta do programa no primeiro cadastro.
 
