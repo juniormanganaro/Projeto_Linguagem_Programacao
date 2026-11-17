@@ -11,11 +11,9 @@ Figura 01 – Romaneio manual
   <img width="500" alt="Image" src="https://github.com/user-attachments/assets/25ef3f5d-1abd-4595-ab58-9d876b91de02](https://github.com/user-attachments/assets/78ba6bd2-ee89-44a3-8840-3f7d1ae20462" />
 </p>
 
-O sistema será destinado ao controle das operações realizadas entre compradores, produtores e vendedores de uvas. A aplicação permitirá registrar os dados dos produtores, cadastrar os produtos comercializados e gerar romaneios contendo informações como quantidade, peso, produto, preço unitário e preço total.
+O sistema permite registrar romaneios com vários itens, informando o produtor e o produto (variedade da uva) diretamente em cada item. Ele realiza automaticamente os cálculos da operação (preço total de cada item, quantidade de volumes, peso total, valor dos produtos, comissão e valor final) e grava tudo em arquivo binário, mantendo um histórico que pode ser consultado depois e no qual é possível alterar a situação do pagamento.
 
-Além do registro das mercadorias, o sistema realizará automaticamente os cálculos relacionados à operação, como o valor total dos produtos, peso total, quantidade de volumes, comissão e frete, conforme as informações utilizadas no processo de comercialização. E o sistema também permitirá o registro das operações de compra e venda de uvas, possibilitando consultar os dados posteriormente e manter um histórico das movimentações realizadas.
-
-A proposta busca solucionar problemas relacionados ao preenchimento manual dos romaneios, como erros de cálculo, dificuldade para localizar informações, perda de registros e necessidade de realizar repetidamente cálculos de valores e totais. Dessa forma, o sistema pretende tornar o processo de gerenciamento das operações de comercialização de uvas mais organizado, rápido e confiável, mantendo no formato digital as principais informações presentes no romaneio utilizado atualmente.
+A proposta busca solucionar problemas do preenchimento manual dos romaneios, como erros de cálculo, dificuldade para localizar informações, perda de registros e necessidade de refazer contas de valores e totais. Dessa forma, o sistema torna o gerenciamento das compras de uvas mais organizado, rápido e confiável, mantendo no formato digital as principais informações do romaneio utilizado atualmente.
 
 ___
 
