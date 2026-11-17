@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de Compra de Uvas por Romaneio
+# Sistema de Registro de Compra de Uvas por Romaneio
 
 ## 1. Descrição do Sistema
 
@@ -23,180 +23,139 @@ ___
 ## 2. Fluxo de Utilização Esperado para o Sistema
 
 ### 2.1 Menu Principal
-Ao iniciar o programa, o usuário visualizará um menu principal com as opções:
-   * `1. Cadastrar Produtor`
-   * `2. Cadastrar Produto`
-   * `3. Registrar Compra`
-   * `4. Histórico de Romaneios`
-   * `5. Listar Produtores`
-   * `6. Listar Produtos`
-   * `7. Sair`
+Ao iniciar o programa, o usuário visualiza um menu principal com as opções:
+   * `1. Registrar Romaneio`
+   * `2. Historico de Romaneios`
+   * `3. Sair`
 
-### 2.2 Cadastro de Produtor
+### 2.2 Registrar Romaneio
 
-Ao selecionar a opção `1`, o sistema solicitará os dados necessários para cadastrar um produtor.
+Ao selecionar a opção `1`, o sistema solicita os dados gerais do romaneio:
 
-Serão solicitadas informações como:
-
-* Código do produtor;
-* Nome do produtor;
-* CPF/CNPJ;
-* Telefone;
-* Propriedade ou localidade.
-
-Após o preenchimento, os dados serão armazenados no sistema e poderão ser utilizados posteriormente no registro dos romaneios e salvará a struct no arquivo `produtores.dat`.
-
-### 2.3 Cadastro de Produto
-
-Na opção `2`, o usuário poderá cadastrar as variedades de uva comercializadas.
-
-Serão solicitadas informações como:
-
-* Código do produto;
-* Variedade da uva;
-* Unidade de comercialização;
-* Preço unitário.
-
-Os produtos cadastrados poderão ser selecionados posteriormente durante o preenchimento dos romaneios e a struct será salva no arquivo `produtos.dat`.
-
-### 2.4 Registro de Romaneio de Compra
-
-Ao selecionar a opção `3`, o sistema iniciará o registro de um romaneio de compra.
-
-Primeiramente, serão solicitados os dados gerais da operação:
-
-* Número do romaneio;
-* Data;
-* Tipo de operação;
+* Número do romaneio (não pode repetir);
+* Data (DD/MM/AAAA);
 * Destino.
 
-Em seguida, o usuário poderá inserir um ou mais itens no romaneio.
+Em seguida, o usuário insere um ou mais itens (até 10), em um laço de repetição. Para cada item informa:
 
-Para cada item serão informados:
-
+* Produtor (nome digitado);
+* Produto, ou seja, a variedade da uva (nome digitado);
 * Quantidade de volumes;
-* Peso;
-* Produto;
-* Preço unitário;
-* Produtor.
+* Peso de cada volume (kg);
+* Preço por kg (R$).
 
-O sistema calculará automaticamente o valor total de cada item:
+O sistema calcula automaticamente o preço total de cada item:
 
-Preço Total = Peso × Preço Unitário
+`Preço Total = Volumes × Peso de cada volume × Preço por kg`
 
-Após o cadastro dos itens, o sistema calculará os totais do romaneio, incluindo:
+Após os itens, o usuário informa o frete e o sistema calcula os totais do romaneio:
 
 * Quantidade total de volumes;
-* Peso total;
+* Peso total (soma de volumes × peso de cada item);
 * Valor total dos produtos;
-* Comissão;
-* Frete;
-* Valor final.
+* Comissão (15% do valor dos produtos);
+* Valor final = valor dos produtos + comissão + frete.
 
-O romaneio também receberá uma situação de pagamento:
+Exemplo: 15 volumes × 8 kg × R$ 56,00 = R$ 6.720,00; comissão de R$ 1.008,00; com frete de R$ 200,00, o valor final é R$ 7.928,00.
 
-* 1 - PAGO
-* 2 - PENDENTE
+Todo romaneio novo é gravado no arquivo `romaneios.dat` com a situação `PENDENTE`.
 
-A struct será salva no arquivo `romaneios.dat`.
+### 2.3 Histórico de Romaneios
+Na opção `2`, o usuário escolhe como consultar os romaneios registrados:
 
-### 2.5 Histórico de Romaneios
-Na opção `4`, o usuário poderá consultar os romaneios registrados anteriormente. O sistema permitirá a consulta por:
+* Por número do romaneio;
+* Por produtor (nome ou parte do nome);
+* Por produto (nome ou parte do nome);
+* Por data;
+* Listar todos.
 
-* Número do romaneio;
-* Produtor;
-* Produto;
-* Data;
-* Tipo de operação – compra ou venda.
+O sistema mostra os romaneios encontrados em uma lista resumida (número, data, destino, valor final e situação). O usuário pode então digitar o número de um romaneio para ver todos os dados. Se a situação for `PENDENTE`, o sistema pergunta se deseja marcar como `PAGO`, e o arquivo `romaneios.dat` é atualizado.
 
-Após localizar o registro no arquivo `romaneios.dat`, exibirá seus dados e o usuário vai poder alterar sua situação de pagamento de `Pendente` para `Pago`.
+### 2.4 Encerramento
+Ao selecionar a opção `3`, o sistema encerra a execução.
 
-### 2.6 Listagem de produtores e produtos
-As opções `5` e `6` permitirão visualizar os cadastros existentes no sistema, armazenados em `produtores.dat` e `produtos.dat`.
+### 2.5 Tratamento de erros
+O sistema exibe mensagens claras e volta ao menu (ou repete a pergunta) nos seguintes casos:
 
-### 2.7 Encerramento
-Ao selecionar a opção `7`, o sistema encerrará a execução.
+* Valor numérico inválido ou fora da faixa permitida (a pergunta é repetida);
+* Número de romaneio já existente;
+* Data fora do formato DD/MM/AAAA;
+* Limite de romaneios atingido;
+* Falha ao abrir ou criar o arquivo `romaneios.dat`;
+* Nenhum romaneio registrado ainda;
+* Busca sem resultados;
+* Número de romaneio não encontrado ao pedir os detalhes.
 
 ___
-
 
 ## 3. Fluxograma da Lógica do Sistema
 <p align="center">
 Figura 02 – Fluxograma
 </p>
 <p align="center">
-  <img width="500" alt="Image" src="https://github.com/user-attachments/assets/591bc431-fee2-4336-bede-1b8393d75430" />
+  <img width="500" alt="Fluxograma" src="https://github.com/user-attachments/assets/591bc431-fee2-4336-bede-1b8393d75430" />
 </p>
 
 ___
 
-
 ## 4. Estrutura de Dados
 
-	// Estrutura para cadastrar produtores</p>
-typedef struct {</p>
-    int codprod[20];</p>
-    char nomeprod[100];</p>
-    int cpf_cnpj[14];</p>
-    int telefone[11];</p>
-    char endereço [200];</p>
-} produtor;</p>
+O sistema utiliza duas estruturas heterogêneas. O romaneio contém um **vetor de structs** (`itens`), reproduzindo a tabela do documento em papel.
 
-// Estrutura para cadastro produto</p>
-typedef struct {</p>
-    int codproduto[20];</p>
-    char nomeuva[100];</p>
-    char unidade[20];</p>
-    float precounit[10]</p>
-} produto;</p>
+```c
+// Constantes
+#define MAX_ITENS 10            /* itens por romaneio */
+#define MAX_ROMANEIOS 100       /* romaneios guardados no arquivo */
+#define ARQUIVO "romaneios.dat"
+#define COMISSAO 0.15f          /* 15% sobre o valor dos produtos */
 
-// Estrutura para o registro de romaneio de compra</p>
-typedef struct {</p>
-    int numromaneio[20];</p>
-    char data[11]; // formato DD/MM/AAAA</p>
-    int ativo; // 1 para compra, 0 para venda (exclusão lógica)</p>
-    char destino[200];</p>
-    int quant[20];</p>
-    float peso[20];</p>
-    char nomeuva[100];</p>
-    float precounit[10];</p>
-    char nomeprod[100];</p>
-    float quanttotal[20];</p>
-    float pesototal[20];</p>
-    float valortotal[20];</p>
-    float precototal[20];</p>
-    precototal = peso * precounit;</p>
-    float comissao[20];</p>
-    comissao = precototal * 0.15;</p>
-    float frete [20];</p>
-    float valorfinal[20];</p>
-    valorfinal = precototal + frete + comissao;</p>
-    int ativo; // 1 para pago, 0 para pendente (exclusão lógica);  
-} romaneio;
+// Uma linha (item) do romaneio
+typedef struct {
+    char produtor[50];
+    char produto[50];           /* variedade da uva */
+    int volumes;
+    float peso;                 /* peso de cada volume (kg) */
+    float preco_unit;           /* preco por kg */
+    float preco_total;          /* volumes * peso * preco_unit */
+} Item;
+
+// O romaneio completo, com vetor de itens e totais
+typedef struct {
+    int numero;
+    char data[11];              /* DD/MM/AAAA */
+    char destino[50];
+    Item itens[MAX_ITENS];
+    int qtd_itens;
+    int total_volumes;
+    float peso_total;
+    float valor_produtos;
+    float comissao;
+    float frete;
+    float valor_final;
+    char situacao[10];          /* "PENDENTE" ou "PAGO" */
+} Romaneio;
+```
+
+Os romaneios ficam gravados em arquivo binário: `romaneios.dat`.
 
 ___
-
 
 ## 5. Organização dos Arquivos
 
 | Arquivo | Responsabilidade |
 |---|---|
-| `main.c` | Menu principal e laço do programa |
-| `utils.h` / `utils.c` | Leitura segura de dados, validações (data, números, CPF/CNPJ) e busca de texto |
-| `produtor.h` / `produtor.c` | Cadastro, busca e listagem de produtores; leitura e gravação de `produtores.dat` |
-| `produto.h` / `produto.c` | Cadastro, busca e listagem de produtos; leitura e gravação de `produtos.dat` |
-| `romaneio.h` / `romaneio.c` | Registro de romaneios, cálculo de totais, histórico e alteração da situação de pagamento |
-
-Cada arquivo `.h` declara as structs, constantes e funções do módulo, e o `.c` correspondente contém a implementação.
+| `main.c` | Exibe o menu principal e chama as funções de cada opção |
+| `romaneio.h` | Constantes, structs (`Item` e `Romaneio`) e protótipos das funções |
+| `romaneio.c` | Leitura de números, leitura e gravação do arquivo, registro, histórico e exibição dos romaneios |
 
 ___
 
 ## 6. Como Compilar e Executar
 
-Com todos os arquivos na mesma pasta, compile os cinco arquivos `.c` juntos:
+Com os três arquivos na mesma pasta, compile:
 
 ```
-gcc -o romaneio main.c utils.c produtor.c produto.c romaneio.c
+gcc -o romaneio main.c romaneio.c
 ```
 
 Execute:
@@ -204,5 +163,20 @@ Execute:
 * Windows: `romaneio.exe`
 * Linux/macOS: `./romaneio`
 
+Em IDEs como Code::Blocks ou Dev-C++, crie um projeto de console em C e adicione `main.c` e `romaneio.c`. O arquivo `romaneios.dat` é criado na pasta do programa no primeiro registro.
+
+___
+
+## 7. Conceitos da Disciplina Aplicados
+
+| Conceito | Onde aparece |
+|---|---|
+| Funções de entrada e saída | `printf` e `scanf` |
+| Estruturas de controle | `if`, `else`, `for`, `while` e `do-while` |
+| Funções (modularização) | Funções em `romaneio.c`, chamadas pelo `main.c` |
+| Estruturas homogêneas | Vetor de romaneios, vetor de itens e strings (`char[]`) |
+| Estruturas heterogêneas | `Item` e `Romaneio`, com vetor de structs |
+| Arquivos | `fopen`, `fread`, `fwrite` e `fclose` em `romaneios.dat` |
+| Divisão do projeto | `main.c`, `romaneio.h`, `romaneio.c` e documentação (este README) |
 Em IDEs como Code::Blocks ou Dev-C++, crie um projeto de console em C e adicione os cinco arquivos `.c`. Os arquivos `.dat` são criados na pasta do programa no primeiro cadastro.
 
