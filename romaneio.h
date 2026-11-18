@@ -1,27 +1,27 @@
 #ifndef ROMANEIO_H
 #define ROMANEIO_H
 
-#define MAX_ITENS 10            /* itens por romaneio */
-#define MAX_ROMANEIOS 100       /* romaneios guardados no arquivo */
+#define MAX_ITENS 10           
+#define MAX_ROMANEIOS 100       
 #define ARQUIVO "romaneios.dat"
-#define COMISSAO 0.15f          /* 15% sobre o valor dos produtos */
+#define COMISSAO 0.15f         
 #define PENDENTE 0
 #define PAGO 1
 
-/* Uma linha da tabela do romaneio */
+
 typedef struct {
     char produtor[50];
-    char produto[50];           /* variedade da uva */
+    char produto[50];           
     int volumes;
-    float peso;                 /* peso de cada volume (kg) */
-    float preco_unit;           /* preco por kg */
-    float preco_total;          /* volumes * peso * preco_unit */
+    float peso;                
+    float preco_unit;         
+    float preco_total;          
 } Item;
 
-/* O romaneio completo: cabecalho, vetor de itens e totais */
+
 typedef struct {
     int numero;
-    char data[11];              /* DD/MM/AAAA */
+    char data[11];             
     char destino[50];
     Item itens[MAX_ITENS];
     int qtd_itens;
@@ -31,8 +31,7 @@ typedef struct {
     float comissao;
     float frete;
     float valor_final;
-    int situacao;               /* PENDENTE ou PAGO */
-} Romaneio;
+    int situacao;               
 
 void lerTexto(char mensagem[], char texto[], int tamanho);
 int lerInteiro(char mensagem[], int minimo, int maximo);
