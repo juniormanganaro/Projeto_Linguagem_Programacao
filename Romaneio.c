@@ -3,23 +3,21 @@
 #include <string.h>
 #include "romaneio.h"
 
-/* ---------- Leitura de dados ---------- */
 
-/* Le um texto com espacos e nao aceita campo vazio */
 void lerTexto(char mensagem[], char texto[], int tamanho) {
     int tam, c;
 
     do {
         printf("%s", mensagem);
-        if (fgets(texto, tamanho, stdin) == NULL) {      /* teclado fechado */
+        if (fgets(texto, tamanho, stdin) == NULL) {      
             printf("\nEntrada encerrada.\n");
             exit(1);
         }
         tam = strlen(texto);
         if (tam > 0 && texto[tam - 1] == '\n') {
-            texto[tam - 1] = '\0';                          /* tira o ENTER */
+            texto[tam - 1] = '\0';                          
         } else {
-            while ((c = getchar()) != '\n' && c != EOF);    /* descarta o excesso */
+            while ((c = getchar()) != '\n' && c != EOF);    
         }
         if (strlen(texto) == 0) {
             printf("Erro: o campo nao pode ficar vazio.\n");
@@ -27,7 +25,6 @@ void lerTexto(char mensagem[], char texto[], int tamanho) {
     } while (strlen(texto) == 0);
 }
 
-/* Le um numero inteiro entre minimo e maximo */
 int lerInteiro(char mensagem[], int minimo, int maximo) {
     char texto[20];
     int valor;
@@ -42,7 +39,6 @@ int lerInteiro(char mensagem[], int minimo, int maximo) {
     return valor;
 }
 
-/* Le um numero real maior ou igual a minimo (use ponto: 8.50) */
 float lerReal(char mensagem[], float minimo) {
     char texto[20];
     float valor;
@@ -57,22 +53,19 @@ float lerReal(char mensagem[], float minimo) {
     return valor;
 }
 
-/* ---------- Arquivo ---------- */
 
-/* Le os romaneios do arquivo para o vetor e devolve quantos foram lidos */
 int carregarRomaneios(Romaneio lista[]) {
     FILE *arquivo = fopen(ARQUIVO, "rb");
     int qtd;
 
     if (arquivo == NULL) {
-        return 0;                   /* arquivo ainda nao existe: nenhum romaneio */
+        return 0;                   
     }
     qtd = fread(lista, sizeof(Romaneio), MAX_ROMANEIOS, arquivo);
     fclose(arquivo);
     return qtd;
 }
 
-/* Grava o vetor no arquivo. Devolve 1 se deu certo e 0 se deu erro */
 int salvarRomaneios(Romaneio lista[], int qtd) {
     FILE *arquivo = fopen(ARQUIVO, "wb");
 
@@ -89,7 +82,6 @@ int salvarRomaneios(Romaneio lista[], int qtd) {
     return 1;
 }
 
-/* ---------- Exibicao ---------- */
 
 void imprimirSituacao(int situacao) {
     if (situacao == PAGO) {
@@ -99,7 +91,6 @@ void imprimirSituacao(int situacao) {
     }
 }
 
-/* Mostra o romaneio completo */
 void exibirRomaneio(Romaneio r) {
     int i;
 
@@ -124,7 +115,6 @@ void exibirRomaneio(Romaneio r) {
     printf("\n========================================\n");
 }
 
-/* ---------- Registrar romaneio (opcao 1) ---------- */
 
 void registrarRomaneio(void) {
     Romaneio lista[MAX_ROMANEIOS];
@@ -154,7 +144,6 @@ void registrarRomaneio(void) {
     }
     lerTexto("Destino: ", novo.destino, 50);
 
-    /* Itens: repete ate o usuario nao querer mais (ou chegar em MAX_ITENS) */
     novo.qtd_itens = 0;
     novo.total_volumes = 0;
     novo.peso_total = 0;
@@ -188,7 +177,6 @@ void registrarRomaneio(void) {
     novo.valor_final = novo.valor_produtos + novo.comissao + novo.frete;
     novo.situacao = PENDENTE;
 
-    /* Grava no arquivo */
     lista[qtd] = novo;
     qtd++;
     if (salvarRomaneios(lista, qtd)) {
@@ -197,10 +185,7 @@ void registrarRomaneio(void) {
     }
 }
 
-/* ---------- Historico (opcao 2) ---------- */
 
-/* Diz se o romaneio atende a busca. criterio: 1 numero, 2 produtor,
-   3 produto, 4 data, 5 listar todos */
 int corresponde(Romaneio r, int criterio, char texto[], int numero) {
     int i;
 
@@ -236,7 +221,6 @@ void historicoRomaneios(void) {
         return;
     }
 
-    /* Escolha da busca */
     printf("1 - Buscar por numero\n2 - Buscar por produtor\n3 - Buscar por produto\n");
     printf("4 - Buscar por data\n5 - Listar todos\n0 - Voltar\n");
     criterio = lerInteiro("Opcao: ", 0, 5);
@@ -253,7 +237,6 @@ void historicoRomaneios(void) {
         lerTexto("Data (DD/MM/AAAA): ", texto, 11);
     }
 
-    /* Mostra os romaneios encontrados */
     printf("\nResultados:\n");
     for (i = 0; i < qtd; i++) {
         if (corresponde(lista[i], criterio, texto, numero)) {
@@ -269,7 +252,6 @@ void historicoRomaneios(void) {
         return;
     }
 
-    /* Visualizacao completa e alteracao da situacao */
     numero = lerInteiro("\nNumero do romaneio para ver detalhes (0 para voltar): ", 0, 99999);
     if (numero == 0) {
         return;
