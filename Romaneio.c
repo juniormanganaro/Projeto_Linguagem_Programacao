@@ -129,7 +129,6 @@ void registrarRomaneio(void) {
         return;
     }
 
-    /* Dados gerais */
     novo.numero = lerInteiro("Numero do romaneio: ", 1, 99999);
     for (i = 0; i < qtd; i++) {
         if (lista[i].numero == novo.numero) {
@@ -171,7 +170,6 @@ void registrarRomaneio(void) {
         }
     } while (continuar == 1);
 
-    /* Totais */
     novo.frete = lerReal("Valor do frete (R$): ", 0);
     novo.comissao = novo.valor_produtos * COMISSAO;
     novo.valor_final = novo.valor_produtos + novo.comissao + novo.frete;
